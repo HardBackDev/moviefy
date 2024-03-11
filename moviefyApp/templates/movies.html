@@ -1,0 +1,65 @@
+{% extends 'scaffold.html' %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col" style="margin-top: 10px; margin-left: 10%;">
+        <form method="GET" action="{% url 'home' %}">
+            <input name="title" class="search-input" type="text" placeholder="Search by title">
+            <button class="primary search-button" type="submit">Search</button>
+        </form>
+    </div>
+    
+    <div class="col">
+        <div class="dropdown" style="margin-top: 10px; ">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Genres
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="?genres=horror" class="dropdown-item" type="button">Horror</a></li>
+                <li><a href="?genres=Thriller" class="dropdown-item" type="button">Thriller</a></li>
+                <li><a href="?genres=Comedy" class="dropdown-item" type="button">Comedy</a></li>
+            </ul>
+        </div>
+    </div>    
+</div>
+  
+
+<section id="movies-section" style="min-height: 300px;">
+    <div class="grid-container">
+        {% for movie in movies %}
+        <div class="col">
+            <div style="display: flex; ">
+                <img src="{{movie.poster_url}}" style="height: 300px; width: 200px;" alt="Example Image">
+                <div style="margin-left: 8px; width: 100%;">
+                    <h2>{{movie.title}}</h2>
+                    <hr>
+                    <h2>Genres: </h2> <a>{{movie.genres}}</a>
+                    <hr>
+                </div>
+            </div>
+            <hr>
+            <div class="row" style="margin-left: 30px; color: rgb(0, 255, 0); font-size: large;">
+                <div class="col">
+                    <h2>Rating: {{movie.rating}}</h2>
+                </div>
+            </div>
+            <hr>
+            <div style="margin-left: 8px;">
+                <div style="text-align: center;">
+                    <a href="{% url 'movie_details' movie.id %}" class="btn btn-info" style="text-align: center;">Details</a>
+                    {% if user.role == 2 %}
+                        <a href="{% url 'delete_movie' movie.id %}" class="btn btn-danger" style="margin-left: 10px;">Delete</a>
+                        <a  href="{% url 'update_movie' movie.id %}" class="btn btn-success" style="margin-left: 10px;">Update</a>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <h3 style="text-align: center;">Release date: {{movie.release_date}}</h3>
+        </div>
+            
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+

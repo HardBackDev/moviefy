@@ -1,0 +1,60 @@
+{% extends 'scaffold.html' %}
+
+{% block content %}
+    <style>
+        h1 {
+        color: #c9c7c7;
+        text-align: center;
+        margin-bottom: 20px;
+        }
+        form {
+            background-color: #440000;
+            padding: 20px;
+            color: #c9c7c7;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        text {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 6.5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <h1>Create New Movie</h1>
+    <form method="post" style="width: 60%; margin-left: 20%;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Create Movie</button>
+            <a class="btn btn-danger" href="{% url 'home' %}">Cancel </a>
+        </div>
+    </form>
+    
+{% endblock %}

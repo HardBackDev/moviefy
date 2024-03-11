@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}  
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'movies.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Website{% endblock %}</title>
+</head>
+<body onload="onPageLoad()" style="background-color: rgb(87, 89, 90);">
+    <main>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/">Moviefy</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul id="mysasnavbar" class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a href="{% url 'topTen' %}" id="topTenLink" class="nav-link">Top 10 movies</a>
+                  </li>
+                  {% if user %}
+                    <li class="nav-item">
+                      <a onclick="signOut()" class="nav-link" href="#">Sign-out</a>
+                    </li>
+                    {% if user.role == 2 %}
+                      <li class="nav-item">
+                        <a href="{% url 'create_movie' %}" class="nav-link" href="#">Add movie</a>
+                      </li>
+                    {% endif %}
+                  {% else %}
+                    <li id='login-element' class="nav-item">
+                      <a href="/login" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="/register" class="nav-link">Sign-Up</a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </nav>
+          {% block content %}
+          {% endblock %}
+    </main>
+</body>
+</html>
+<script>
+  function signOut(){
+    document.cookie = 'jwt_token' + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    location.reload()
+  }
+</script>
